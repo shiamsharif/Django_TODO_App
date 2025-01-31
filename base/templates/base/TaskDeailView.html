@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        header {
+            background-color:rgb(20, 98, 182);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        header .auth {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        header .auth a {
+            color: #ffd700;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+        header .auth a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        .navigation {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .navigation a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+        .task-details {
+            margin-bottom: 20px;
+        }
+        .task-details h2 {
+            color: #555;
+        }
+        .task-details p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .actions {
+            text-align: center;
+        }
+        .btn-delete {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #dc3545;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>To-Do List</h1>
+        <div class="auth">
+            {% if user.is_authenticated %}
+                <p>Welcome, {{ user.username }}!</p>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </div>
+    </header>
+    <div class="container">
+        <h1>Task Details</h1>
+        <div class="navigation">
+            <a href="{% url 'tasks' %}">← Go Back</a>
+        </div>
+        <div class="task-details">
+            <h2>Task: {{ task.title }}</h2>
+            <p><strong>Description:</strong> {{ task.description }}</p>
+        </div>
+        <div class="actions">
+            <a href="{% url 'task-delete' task.id %}" class="btn-delete">Delete Task</a>
+        </div>
+    </div>
+</body>
+</html>
