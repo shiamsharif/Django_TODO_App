@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 from .models import Task
 
@@ -16,11 +18,26 @@ class CustomLoginView(LoginView):
     - Redirects users to the 'tasks' page upon successful login.
     """
     template_name = "base/Login.html"
-    fields = '__all__'  # ⚠️ Fix syntax error (removed extra closing parenthesis)
+    fields = '__all__'  
     redirect_authenticated_user = True  # If the user is already logged in, redirect them
 
     def get_success_url(self):
         return reverse_lazy('tasks')  # Redirect to the task list after login
+    
+
+class RegistrationView(FormView):
+    template_name = "base/register.html"
+    form_class = UserCreationForm
+    redirect_authenticated_user = True  # If the user is already logged in, redirect them
+    success_url = reverse_lazy('tasks')
+
+    def form_valid(self, form):
+        user = form.save()
+        if user is not None:
+            login(self.request, user)
+        return super().form_valid(form)
+    
+
 
 
 # ✅ Task List View (Shows tasks belonging only to the logged-in user)
@@ -82,7 +99,10 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         Before saving the form, set the user field to the logged-in user.
         This prevents users from creating tasks for other users.
         """
+        print(f"User before assignmet: {form.instance.user}")
         form.instance.user = self.request.user
+        print(f"User after assignmet: {form.instance.user}")
+
         return super().form_valid(form)
 
 

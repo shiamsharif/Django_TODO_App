@@ -25,13 +25,15 @@ from .views import (
     TaskCreateView, 
     TaskUpdateView, 
     TaskDeleteView, 
-    CustomLoginView
+    CustomLoginView,
+    RegistrationView
 )
 
 urlpatterns = [
     # ✅ Authentication URLs
     path('login/', CustomLoginView.as_view(), name="login"),  # User login page
     path('logout/', LogoutView.as_view(next_page='login'), name="logout"),  # Logout and redirect to login
+    path('register/', RegistrationView.as_view(), name="register"),
 
     # ✅ Task Management URLs
     path("", TaskListView.as_view(), name="tasks"),  # Task list (Homepage)

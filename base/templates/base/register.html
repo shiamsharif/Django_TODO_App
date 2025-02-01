@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Register</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,7 +15,7 @@
             align-items: center;
             height: 100vh;
         }
-        .login-container {
+        .register-container {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -39,7 +39,7 @@
         }
         button {
             padding: 10px;
-            background-color: #007bff;
+            background-color: #28a745;
             color: white;
             font-size: 16px;
             border: none;
@@ -47,7 +47,7 @@
             cursor: pointer;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #218838;
         }
         .links {
             margin-top: 15px;
@@ -63,20 +63,17 @@
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h1>Login</h1>
-        <!-- Login Form -->
+    <div class="register-container">
+        <h1>Register</h1>
+        <!-- Registration Form -->
         <form method="post">
             {% csrf_token %}
-            {{form.as_p}}
-            <button type="submit" value="login">Login</button>
+            {{ form.as_p }}
+            <button type="submit">Register</button>
         </form>
         <!-- Additional Links -->
         <div class="links">
-            <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
-            {% comment %} 
-            <p><a href="{% url 'password_reset' %}">Forgot Password?</a></p> 
-            {% endcomment %}
+            <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
         </div>
     </div> 
 </body>

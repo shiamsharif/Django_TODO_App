@@ -139,6 +139,7 @@
             <thead>
                 <tr>
                     <th>Task</th>
+                    <th>Created</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -146,6 +147,7 @@
                 {% for task in tasks %}
                 <tr>
                     <td>{{ task.title }}</td>
+                    <td>{{ task.create|timesince }} ago</td>
                     <td>
                         <a href="{% url 'task' task.id %}" class="btn btn-view">View</a>
                         <a href="{% url 'task-update' task.id %}" class="btn btn-edit">Edit</a>

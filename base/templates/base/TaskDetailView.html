@@ -103,12 +103,13 @@
     </header>
     <div class="container">
         <h1>Task Details</h1>
+        <p>Created : {{ task.create|timesince }} ago</p>
         <div class="navigation">
             <a href="{% url 'tasks' %}">← Go Back</a>
         </div>
         <div class="task-details">
             <h2>Task: {{ task.title }}</h2>
-            <p><strong>Description:</strong> {{ task.description }}</p>
+            <p><strong>Description:</strong> {{ task.description|linebreaks }}</p>
         </div>
         <div class="actions">
             <a href="{% url 'task-delete' task.id %}" class="btn-delete">Delete Task</a>
