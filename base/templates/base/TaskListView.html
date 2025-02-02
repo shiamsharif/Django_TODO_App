@@ -13,7 +13,7 @@
             color: #333;
         }
         header {
-            background-color:rgb(20, 98, 182);
+            background-color: rgb(20, 98, 182);
             color: #fff;
             padding: 20px;
             text-align: center;
@@ -42,22 +42,47 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .add-task {
+        .top-section {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        .search-box {
+            display: flex;
+            gap: 10px;
+            flex-grow: 1;
+        }
+        .search-box input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            flex-grow: 1;
+            font-size: 14px;
+        }
+        .search-box button {
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .search-box button:hover {
+            background-color: #0056b3;
         }
         .add-task a {
             text-decoration: none;
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 8px 15px;
             border-radius: 4px;
             font-size: 14px;
         }
         .add-task a:hover {
-            background-color: #0056b3;
+            background-color: #218838;
         }
         table {
             width: 100%;
@@ -74,11 +99,12 @@
             color: white;
         }
         .btn {
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 13px;
             text-decoration: none;
             color: white;
+            margin-right: 5px;
         }
         .btn-view {
             background-color: #007bff;
@@ -103,14 +129,14 @@
             color: #888;
             margin-top: 20px;
         }
-        button:hover {
-            background-color: #c82333;
-            transform: scale(1.05);
-        }
-    
-        a:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
+        @media (max-width: 600px) {
+            .top-section {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .search-box {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -131,10 +157,18 @@
     </header>
 
     <main>
-        <div class="add-task">
-            <h2>Your Tasks</h2>
-            <a href="{% url 'task-create' %}">+ Add Task</a>
+        <div class="top-section">
+            <div class="search-box">
+                <form method="GET" action="">
+                    <input type="text" name="q" placeholder="Search tasks..." value="{{ search_query }}">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+            <div class="add-task">
+                <a href="{% url 'task-create' %}">+ Add Task</a>
+            </div>
         </div>
+
         <table>
             <thead>
                 <tr>
@@ -156,7 +190,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="2" class="empty-list">No tasks in the list</td>
+                    <td colspan="3" class="empty-list">No tasks found.</td>
                 </tr>
                 {% endfor %}
             </tbody>
